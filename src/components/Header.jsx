@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
-
 import PizzaLogo from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 
