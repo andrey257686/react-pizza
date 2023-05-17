@@ -24,16 +24,13 @@ function Sort() {
   };
 
   useEffect(() => {
-    console.log('Sort mount');
     const handleClickOutside = (event) => {
-      console.log('click outside');
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
     document.body.addEventListener('click', handleClickOutside);
     return () => {
-      console.log('Sort unmount');
       document.body.removeEventListener('click', handleClickOutside);
     };
   }, []);
