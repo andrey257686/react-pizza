@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slice/filterSlice';
 
@@ -12,6 +12,7 @@ export const sortList = [
 ];
 
 function Sort() {
+  const sortRef = useRef();
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filterReducer.sort);
 
@@ -22,8 +23,24 @@ function Sort() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    console.log('Sort mount');
+    const handleClickOutside = (event) => {
+      console.log('click outside');
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+    return () => {
+      console.log('Sort unmount');
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  // console.log('render');
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
