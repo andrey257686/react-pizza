@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
 import Categories from '../components/Categories';
@@ -95,6 +95,13 @@ const Home = () => {
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
+  const pizzas = items.map((obj) => (
+    <Link key={obj.id} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
+  const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
+
   return (
     <div className="container">
       <div className="content__top">
@@ -108,11 +115,7 @@ const Home = () => {
           <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже</p>
         </div>
       ) : (
-        <div className="content__items">
-          {status === 'loading'
-            ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-            : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
-        </div>
+        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
