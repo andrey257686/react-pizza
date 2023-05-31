@@ -5,11 +5,11 @@ import PizzaLogo from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 import { selectCart } from '../redux/slice/cartSlice';
 
-function Header() {
+const Header: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCart);
   const location = useLocation();
 
-  const totalCount = items.reduce((sum, obj) => {
+  const totalCount = items.reduce((sum: number, obj: any) => {
     return obj.count + sum;
   }, 0);
 
